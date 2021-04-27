@@ -24,25 +24,40 @@ client.on("subscription", onSubHandler);
 client.on("timeout", onTimeOutHandler);
 client.connect();
 
-let setIntervalMessage = [
-  "If you like what you see, don't wait to hit that follow button! You'll get my content for absolutely free, aaaand get to hang out my nerd ass.",
-  "For the lurkers: I love all of you and if you come back, I'll give you cookies!",
-];
-setTimeout(function () {
-  setInterval(function () {
-    client.say(
-      "s0n_h3li0s",
-      Math.floor(setIntervalMessage.length * Math.random())
-    );
-  }, 1800000);
-}, 1000);
-
 let userPool = [
   {
     username: "s0n_h3li0s",
     subscriber: true,
   },
 ];
+
+let setIntervalMessage = [
+  "/me If you like what you see, don't wait to hit that follow button! You'll get my content for absolutely free, aaaand get to hang out my nerd ass.",
+  "/me For the lurkers: I love all of you and if you come back, I'll give you cookies! <3",
+  "/me Though not required, if you'd like to support me and the stream, feel free to subscribe!",
+  "/me REMINDER: Free prime sub available! (just kidding, but feel free)",
+  "/me Thank you guys for being here! Y'all are the best. If you want to keep up with me or the stream heres the discord link: https://discord.gg/ftfZswTnnB",
+];
+
+// Delays first message to give time for the bot to connect to IRC server
+setTimeout(function () {
+  // Throws message to chat on an interval
+  setInterval(
+    function () {
+      let intervalRandom = Math.floor(
+        Math.random() * setIntervalMessage.length
+      );
+      let date = new Date();
+      let hours = date.getHours();
+      let mins = date.getMinutes();
+      let time = `${hours}:${mins}`;
+      console.log(`message sent @ ${time}`);
+      client.say("s0n_h3li0s", setIntervalMessage[intervalRandom]);
+    },
+    // 30 minute interval
+    1800000
+  );
+}, 1000);
 
 // Called every time a message is typed in a chat that the bot is connected to
 function onMessageHandler(target, context, message, self) {
