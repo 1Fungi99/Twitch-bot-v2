@@ -1,0 +1,5 @@
+*.log
+*.orig
+*.env
+node_modules/
+data.json
